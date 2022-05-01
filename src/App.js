@@ -12,6 +12,8 @@ const App = () => {
   const [messageValue, setMessageValue] = useState("");
   /* すべてのwavesを保存する状態変数を定義 */
   const [allWaves, setAllWaves] = useState([]);
+  /* ETHをゲットできたか？ */
+  const [getEth, setGetEth] = useState(false);
   console.log("currentAccount: ", currentAccount);
   /* デプロイされたコントラクトのアドレスを保持する変数を作成 */
   const contractAddress = "0xdAb6e3076E88fC76537A0a2cCbE600609773E5bc";
@@ -168,8 +170,10 @@ const App = () => {
         if (contractBalance_post < contractBalance) {
           /* 減っていたら下記を出力 */
           console.log("User won ETH!");
+          setGetEth(true);
         } else {
           console.log("User didn't win ETH.");
+          setGetEth(false);
         }
         console.log(
           "Contract balance after wave:",
@@ -208,6 +212,12 @@ const App = () => {
           </span>
         </div>
         <br />
+        {/* ETHをゲットできた時に表示 */}
+        {getEth && (
+          <div className="getEth">
+            イーサリアムをゲットできました！ ご貢献ありがとうございます！
+          </div>
+        )}
         {/* ウォレットコネクトのボタンを実装 */}
         {!currentAccount && (
           <button className="waveButton" onClick={connectWallet}>
